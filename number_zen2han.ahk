@@ -1,0 +1,51 @@
+; 全角入力モードでの数字入力を半角に変換する
+0::
+{
+  Send("{U+0030}")
+  Return
+}
+1::
+{
+  Send("{U+0031}")
+  Return
+}
+2::
+{
+  Send("{U+0032}")
+  Return
+}
+3::
+{
+  Send("{U+0033}")
+  Return
+}
+4::
+{
+  Send("{U+0034}")
+  Return
+}
+5::
+{
+  Send("{U+0035}")
+  Return
+}
+6::
+{
+  Send("{U+0036}")
+  Return
+}
+7::
+{
+  Send("{U+0037}")
+  Return
+}
+8::
+{
+  Send("{U+0038}")
+  Return
+}
+9::
+{
+  Send("{U+0039}")
+  Return
+}
