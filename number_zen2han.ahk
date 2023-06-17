@@ -54,3 +54,8 @@
   Send("{U+0060}")
   Return
 }
+_::
+{
+  Send("{U+005F}")
+  Return
+}
