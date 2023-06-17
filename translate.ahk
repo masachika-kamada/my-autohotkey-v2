@@ -37,24 +37,39 @@
 
     ; 'DeepL...' というtitleのウィンドウを探します（前方一致）
     ; ウィンドウが存在しない場合、エラーメッセージを表示
-    if !WinExist("DeepL")
+    if WinExist("DeepL")
     {
-        MsgBox("DeepL window not found.`r`nPlease keep DeepL open first!", "", "")
-        A_Clipboard := "" ; クリップボードを空にして終了
-        return
+        ; 予め開いておいたDeepL翻訳ウィンドウをアクティブに
+        WinActivate("DeepL")
+        ; アクティブになるまで待機
+        WinWaitActive("DeepL", , 2)
+
+        Send("^a") ; 原文のテキストフィールドを選択
+        Send("^v") ; 置換されたテキストを貼り付け
+        Sleep(wait_time)
+
+        WinActivate("ahk_id " main_id) ;PDF viewerをアクティブに戻す
+        Sleep(wait_time)
+        A_Clipboard := "" ; 毎回クリップボードを空にしておく
     }
+    else if WinExist("ChatGPT")
+    {
+        ; 予め開いておいたChatGPTウィンドウをアクティブに
+        WinActivate("ChatGPT")
+        ; アクティブになるまで待機
+        WinWaitActive("ChatGPT", , 2)
 
-    ; 予め開いておいたDeepL翻訳ウィンドウをアクティブに
-    WinActivate("DeepL")
-    ; アクティブになるまで待機
-    WinWaitActive("DeepL", , 2)
-
-    Send("^a") ; 原文のテキストフィールドを選択
-    Send("^v") ; 置換されたテキストを貼り付け
-    Sleep(wait_time)
-
-    WinActivate("ahk_id " main_id) ;PDF viewerをアクティブに戻す
-    Sleep(wait_time)
-    A_Clipboard := "" ; 毎回クリップボードを空にしておく
-return
+        Send("^a") ; 原文のテキストフィールドを選択
+        Send("{Text}Please translate the following English into Japanese:`r`n") ; Promptを挿入
+        ; Send "{Text}ここにテキストを入力"
+        sleep(500)
+        Send("^v") ; 置換されたテキストを貼り付け
+        Sleep(wait_time)
+    }
+    Else
+    {
+        MsgBox("Translation window not found.`r`nPlease keep the translation service open first!", "", "")
+        A_Clipboard := "" ; クリップボードを空にして終了
+    }
+    return
 } ; V1toV2: Added bracket in the end
