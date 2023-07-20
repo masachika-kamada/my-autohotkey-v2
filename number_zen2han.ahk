@@ -59,3 +59,8 @@ _::
   Send("{U+005F}")
   Return
 }
+#::
+{
+  Send("{U+0023}")
+  Return
+}
